@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            String sc = scanner. nextLine();
+            int ss = 1;
+            if(sc.length() < 2 ){
+                System.out.println("1");
+            }
+        for(int c = 0; c< sc.length();c++){
+            for(int d = c; d <sc.length();d++){
+               String csa= sc.substring(c,d+1);
+               if(helper(csa)){
+                   if(csa.length() > ss){
+                       ss = csa.length();
+                   }
+               }
+            }
+        }
+       
+       System.out.println(ss);
+        }
+    
+    //helper function to check palindrom    
+    public static boolean helper(String kkk){
+             String rr = "";
+         for(int i = 0; i< kkk.length(); i++){
+             rr = rr + kkk.charAt(kkk.length()-i-1);
+         }
+      
+        return rr.equals(kkk);
+         
+        }
+}
