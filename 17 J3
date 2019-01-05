@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int [] arr = new int[5];
+    for(int i = 0; i < 5; i++){
+            arr[i] = sc.nextInt();
+        }
+        if(java.lang.Math.abs(arr[2] -arr[0]) + java.lang.Math.abs(arr[3]-arr[1]) > arr[4]){
+            System.out.println("N");
+            System.exit(0);
+        }
+            if((arr[4] -java.lang.Math.abs(arr[2] -arr[0]) + java.lang.Math.abs(arr[3]-arr[1])) % 2 == 0){
+                System.out.println("Y");
+            }else{
+                System.out.println("N");
+            }
+    }
+}
