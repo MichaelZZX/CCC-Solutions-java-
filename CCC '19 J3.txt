@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        
+        for(int i=0; i<n; i++){
+            int sashimi = sc.nextInt();
+            int nigiri = sc.nextInt();
+            int total = sc.nextInt();
+            int possible = 0;
+            for(int j=0; j<=total/sashimi; j++){
+                for(int k=0; k<=total/nigiri; k++){
+                    if (j*sashimi + k*nigiri == total){
+                        possible = 1;
+                    }
+                }
+            }
+            if (possible == 1){
+                System.out.println("YES");
+            }
+            else {
+                System.out.println("NO");
+            }
+        }
+    }
+}
