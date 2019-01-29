@@ -1,0 +1,40 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner yes = new Scanner(System.in); 
+        int n = yes.nextInt();
+        int dtb = 0; 
+        int bb = 0; 
+        int s = 0; 
+        int rb = 0; 
+        for(int i=0; i<=n; i++){
+        String f = yes.nextLine(); 
+            if(f.equals("Deluxe Tuna Bitz")){
+                dtb++; 
+            }
+            if(f.equals("Bonito Bitz")){
+                bb++; 
+            }
+            if(f.equals("Sashimi")){
+                s++; 
+            }
+            if(f.equals("Ritzy Bitz")){
+                rb++; 
+            }
+        }
+        if(dtb>0){
+        System.out.println("Deluxe Tuna Bitz"+" "+dtb);
+        }
+        if(bb>0){
+        System.out.println("Bonito Bitz"+" "+bb);
+        }
+        if(s>0){
+        System.out.println("Sashimi"+" "+s);
+        }
+        if(rb>0){
+        System.out.println("Ritzy Bitz"+" "+rb);      
+        }
+    }
+}
