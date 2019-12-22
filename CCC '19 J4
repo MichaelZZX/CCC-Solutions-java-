@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+import java.util.Scanner;
+
+public class Main {
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String n = sc.nextLine();
+        sc.close();
+        int countH = 0;
+        for(int i = 0 ; i < n.length(); i++){
+         if(n.charAt(i) == 'H'){
+             countH++;
+         }
+        }
+        int countV = n.length() - countH;
+        if((countH % 2 == 0) && (countV % 2 == 0)){
+            System.out.println("1 2");
+            System.out.println("3 4");
+        }else if((countH % 2 == 0) && (countV % 2 == 1)){
+            System.out.println("2 1");
+            System.out.println("4 3"); 
+        }else if((countH % 2 == 1) && (countV % 2 == 0)){
+            System.out.println("3 4");
+            System.out.println("1 2"); 
+        }else{
+            System.out.println("4 3");
+            System.out.println("2 1"); 
+        }
+
+    }
+}
