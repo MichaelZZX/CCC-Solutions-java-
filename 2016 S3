@@ -1,0 +1,43 @@
+// int[] keeps the farthest node and the distance :{node,distance}
+     static int[] findFarthest(int start){
+         Queue<Integer> q = new LinkedList<>();
+         boolean[] visited = new boolean[tree.length];
+         int[] level = new int[tree.length];
+         q.add(start);
+         level[start] = 0;
+         int node = 0
+         int distance = 0;
+         while(!q.isEmpty()){
+             node = q.remove();
+             visited[node] = true;
+             for(int child: tree[node]){
+                 if(!visited[child]){
+                     distance = level[node]+1;
+                     q.add[child];
+                     level[child] = distance;
+                 }
+             }
+         }
+         // last element visted in BFS is always the farthest node
+         int[] ret = {node, distance};
+         return ret;
+         
+     }
+     static int Prune(LinkedList<Integer>[] tree){
+         int left = tree.length;
+         for(int i=0; i<tree.length; i++){
+             int node = i;
+             while(tree[i].size()==1 && !pho?[node]){
+                 int temp = tree[node].remove();
+                 tree[temp].remove(node);
+                 left--;
+                 node = temp;
+             }
+         }
+     }
+     
+     public void main(String[] ags){
+         int firstFind = findFarthest(startNode)[0];
+         int secondFind = findFarthest(firstFind)[1];
+         return secondFind + (tree.length - (secondFind+1))*2
+     }
