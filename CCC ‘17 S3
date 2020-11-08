@@ -7,26 +7,31 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
 		try {
 			int n = Integer.parseInt(in.readLine());
-      // the array "half" is for saving the number of boards with a certain height, eg: half[3]=4 means there are 4 boards with height 3.
+      			// the array "half" saves the number of boards with a certain height, eg: half[3]=4 means there are 4 boards with height 3.
 			int [] half = new int [2000];
 			String [] t = in.readLine().split(" ");
 			
 			for(int i = 0 ; i < n; i ++) {
 				half[Integer.parseInt(t[i])-1] ++;
 			}
-			
+			// the array "info" saves the number of combinations with a certain height, eg: info[6]=2 means there are 2 combinations with height 6.
 			int [] info = new int[3999];
+			// now we need to populate info[]
 			// consider i as the height of the first board, j as the height of the second board
 			for(int i =0; i < 2000; i ++) {
-        // for any even target heights, the number of conbinations should start with the number of half boards times 2. 
-        // eg: info[8] = half[4]/2  for example, we have 6 boards with height 4, they can make up 2 fences with height 8
+        			// for any even target heights, the number of conbinations should start with the number of half boards times 2. 
+        			// eg: info[8] = half[4]/2  for example, we have 6 boards with height 4, they can make up 2 fences with height 8
 				info[2*i]+= half[i]/2;
 				for(int j =i+1; j < 2000; j ++) {
+					// how many combination of this height can be make is depend on the number of smaller half
+					// eg: the height we want make is 8, we have 3 boards with height 5 and 2 boards with height 3, than we can only make 2 fence with height 8
 					info[i+j]+= Math.min(half[i], half[j]);
 				}
 			}
-			int heights=0;
-			int width=0; 
+			
+			// now we wanna find the largest value in info[] and the number of appearence of that value
+			int width=0; // the largest value
+			int heights=0; // the number of appearence of that value
 			for(int i = 0 ; i < 3999; i ++) {
 				if(info[i]!=0) {
 				if(info[i]>width) {
