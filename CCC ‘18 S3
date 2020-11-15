@@ -1,0 +1,148 @@
+    public static void RoboThieves() {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int M = sc.nextInt();
+        Node[][] grid = new Node[N][M];
+        int sRow = 0;
+        int sCol = 0;
+
+        for(int i = 0; i < N; i++) {
+            String input= sc.next();
+            for(int s = 0; s < input.length(); s++) {
+                if(input.charAt(s) != 'W' && input.charAt(s) != 'C') {
+                    grid[i][s] = new Node(input.charAt(s), true);
+                } else {
+                    grid[i][s] = new Node(input.charAt(s), false);
+                }
+                if(input.charAt(s) == 'S') {
+                    sRow = i;
+                    sCol = s;
+                }
+            }
+        }
+        Set<Character> conveyors = new HashSet<>();
+        conveyors.add('U');
+        conveyors.add('D');
+        conveyors.add('L');
+        conveyors.add('R');
+
+        //for each camara node, check four directions around it, set all node statuus to false if a node can be seen by that camera
+        for(int r = 0; r < N; r++) {
+            for(int c = 0; c < M; c++) {
+                if(grid[r][c].val == 'C') {
+                    int row = r;
+                    int col = c;
+                    while(col+1 < M-1) {
+                        col++;
+                        if(grid[row][col].val == 'W') {
+                            break;
+                        } else if(conveyors.contains(grid[row][col].val)) {
+                            continue;
+                        } else {
+                            grid[row][col].walkable = false;
+                        }
+                    }
+                    col = c;
+                    while(col-1 > 0) {
+                        col--;
+                        if(grid[row][col].val == 'W') {
+                            break;
+                        } else if(conveyors.contains(grid[row][col].val)) {
+                            continue;
+                        } else {
+                            grid[row][col].walkable = false;
+                        }
+                    }
+                    col = c;
+                    while(row+1 < N-1) {
+                        row++;
+                        if(grid[row][col].val == 'W') {
+                            break;
+                        } else if(conveyors.contains(grid[row][col].val)) {
+                            continue;
+                        } else {
+                            grid[row][col].walkable = false;
+                        }
+                    }
+                    row = r;
+                    while(row-1 > 0) {
+                        row--;
+                        if(grid[row][col].val == 'W') {
+                            break;
+                        } else if(conveyors.contains(grid[row][col].val)) {
+                            continue;
+                        } else {
+                            grid[row][col].walkable = false;
+                        }
+                    }
+                }
+            }
+        }
+        // bfs
+        walk(grid, sRow, sCol, 0);
+
+        for(int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (grid[i][j].val == '.') {
+                    if (grid[i][j].dist == Integer.MAX_VALUE) {
+                        System.out.println(-1);
+                    } else {
+                        System.out.println(grid[i][j].dist);
+                    }
+                }
+            }
+        }
+    }
+
+    public static void walk (Node[][] grid, int row, int col, int step) {
+        if(!grid[row][col].walkable || grid[row][col].dist <= step) {
+            return;
+        }
+        
+        grid[row][col].dist = step;
+        
+        // check conveyors
+        if(grid[row][col].val == 'U') {
+            walk(grid, row-1, col, step);
+            return;
+        }
+        if(grid[row][col].val == 'D') {
+            walk(grid, row+1, col, step);
+            return;
+        }
+        if(grid[row][col].val == 'L') {
+            walk(grid, row, col-1, step);
+            return;
+        }
+        if(grid[row][col].val == 'R') {
+            walk(grid, row, col+1, step);
+            return;
+        }
+        
+        // bfs recursion
+        if(grid[row-1][col].walkable) {
+            walk(grid, row-1, col, step+1);
+        }
+        if(grid[row+1][col].walkable) {
+            walk(grid, row+1, col, step+1);
+        }
+        if(grid[row][col-1].walkable) {
+            walk(grid, row, col-1, step+1);
+        }
+        if(grid[row][col+1].walkable) {
+            walk(grid, row, col+1, step+1);
+        }
+
+    }
+  
+    static class Node{
+        char val; //W - wall, S - start, C - camera, LRUD - conveyors, . - empty
+        boolean walkable;
+        int dist; //how many steps from start
+
+        public Node(char v, boolean w){
+            val = v;
+            walkable = w;
+            dist = Integer.MAX_VALUE;
+        }
+    }
