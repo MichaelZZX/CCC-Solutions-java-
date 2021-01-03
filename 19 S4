@@ -1,1 +1,83 @@
 //参考：https://xianka.luobotou.org/?p=620
+//思路：主要考虑前n天最多可以少走几个景点，eg: dp[3][2]表示前三天少走2个景点的happy值。
+
+public static void Tourism(){
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int K = sc.nextInt();
+
+        int[] days = new int[N+1];
+
+        for(int i = 1; i <= N; i++) {
+            days[i] = sc.nextInt();
+        }
+
+        int totalDays = (N/K)+1;
+        int daysOff = K-(N%K) == K? 0: K-(N%K);
+
+        if(daysOff == 0) {
+            int sum = 0;
+            for(int i = 1; i <= N; i+=K) {
+                sum+= findMaxInRange(days, i, i+K-1);
+            }
+            System.out.println(sum);
+            System.exit(0);
+        }
+
+        int[][] dp = new int[totalDays+1][daysOff+1];
+
+        for(int i = 0; i <= daysOff; i++) {
+            dp[1][i] = findMaxInRange(days, 1, K-i);
+        }
+        //d:Day
+        for(int d = 2; d <= totalDays; d++) {
+
+            //Testing
+//            for(int a = 0; a <= totalDays; a++) {
+//                for(int b = 0; b <= daysOff; b++) {
+//                    System.out.print(dp[a][b] + " ");
+//                }
+//                System.out.println();
+//            }
+            System.out.println("___");
+
+            //m:daysMissed in total
+            for(int m = 0; m <= daysOff; m++) {
+                if(d == totalDays && m != daysOff) {
+                    continue;
+                }
+                //j:total days skipped on previous days
+                PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
+                for(int j = 0; j <= m; j++) {
+                    //add 1 to compensate for starting from 1 in dp array
+                    pq.add(dp[d-1][j] + findMaxInRange(days, K*d-(K+j)+1, Math.min(K*d-(K+j)+(K-(m-j)), N)));
+                }
+                dp[d][m] = pq.poll();
+            }
+        }
+
+        //Testing
+        for(int a = 0; a <= totalDays; a++) {
+            for(int b = 0; b <= daysOff; b++) {
+                System.out.print(dp[a][b] + " ");
+            }
+            System.out.println();
+        }
+
+        System.out.println(dp[totalDays][daysOff]);
+//        10
+//        3
+//        1 6 22 4 1 7 2 3 9 1
+
+    }
+    //includes start and finish
+    public static int findMaxInRange(int[] days, int start, int finish) {
+        int max = -1;
+
+        for(int i = start; i <= finish; i++) {
+            if(days[i] > max) {
+                max = days[i];
+            }
+        }
+        return max;
+    }
