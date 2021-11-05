@@ -39,7 +39,7 @@ public class Main {
             System.out.println("");
                 }
         }
-        //matrix spined 360 degrees clockwise
+        //matrix spined 270 degrees clockwise
         else if(sc[n-1][0] < sc[n-2][0] && sc[n-1][0] < sc[n-1][1]){
             for(int i = 0; i < n; i++){
                 for(int x = n-1; x >= 0; x--){
