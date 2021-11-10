@@ -1,0 +1,47 @@
+mport java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int amount = sc.nextInt();
+        int time = 0;
+        ArrayList<String> sortList = new ArrayList <String>();
+        sc.nextLine();
+        Map<String, Integer> map = new HashMap();
+        Map<String, Integer> waitmap = new HashMap();
+        for (int i = 0;i < amount; i++){
+            String str = sc.nextLine();
+            String personNum = str.substring(2);
+            String command = str.substring(0, 1);
+            if (command.equals("W")){
+                time += Integer.parseInt(personNum) - 1;
+            }else if (command.equals("R")){
+                time++;
+                map.put(personNum, time);
+            }else if (command.equals("S")){
+                time++;
+                if (waitmap.containsKey(personNum)){
+                    int pretime = waitmap.get(personNum);
+                    waitmap.put(personNum, time + pretime - map.get(personNum));
+                    map.put(personNum, -2);
+                }else{
+                    waitmap.put(personNum, time - map.get(personNum));
+                    map.put(personNum, -2);
+                }
+                }
+        }
+        for (String a : map.keySet()){
+            if (map.get(a) != -2){
+                waitmap.put(a, -1);
+            }
+        }
+        for (String b : waitmap.keySet()){
+            sortList.add(b);
+        }
+        Collections.sort(sortList);
+        for(String s : sortList){
+            System.out.println(s + " " + waitmap.get(s));
+        }
+    }
+}
