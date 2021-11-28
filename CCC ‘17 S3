@@ -7,7 +7,7 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
 		try {
 			int n = Integer.parseInt(in.readLine());
-      			// the array "half" saves the number of boards with a certain height, eg: half[3]=4 means there are 4 boards with height 3.
+      			// the array "half" saves the number of pieces with a certain height, eg: half[3]=4 means there are 4 pieces with height 3.
 			int [] half = new int [2000];
 			String [] t = in.readLine().split(" ");
 			
