@@ -14,7 +14,7 @@ public class Main {
         }
         
         Arrays.sort(arr);
-        
+        // odd length
         if(n%2!=0){
             index = n/2;
             for(int i=1; i<=n; i++){
@@ -25,6 +25,7 @@ public class Main {
                     index += i;
                 }
             }
+         // even length
         }else{
             index = (n/2)-1;
             for(int i=1; i<=n; i++){
