@@ -1,0 +1,73 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        int l = 0;
+        int m = 0;
+        int s = 0;
+        
+        for(int i =0; i<str.length(); i++){
+            if(str.substring(i,i+1).equals("L")){
+                l++;
+            }
+            if(str.substring(i,i+1).equals("M")){
+                m++;
+            }
+            if(str.substring(i,i+1).equals("S")){
+                s++;
+            }
+        }
+        
+        int MinL = 0;
+        int SinL = 0;
+        for(int i=0; i<l; i++){
+            if(str.substring(i,i+1).equals("M")){
+                MinL++;
+            }
+            if(str.substring(i,i+1).equals("S")){
+                SinL++;
+            }
+        }
+        
+        int LinM = 0;
+        int SinM = 0;
+        for(int i=l; i<l+m; i++){
+            if(str.substring(i,i+1).equals("L")){
+                LinM++;
+            }
+            if(str.substring(i,i+1).equals("S")){
+                SinM++;
+            }
+        }
+        
+        int LinS = 0;
+        int MinS = 0;
+        for(int i=l+m; i<l+m+s; i++){
+            if(str.substring(i,i+1).equals("M")){
+                MinS++;
+            }
+            if(str.substring(i,i+1).equals("L")){
+                LinS++;
+            }
+        }
+        
+        int swap = 0;
+        // we call a swap "perfect swap" if it's like MinL and LinM
+        swap += Math.min(MinL, LinM);
+        
+        swap += Math.min(SinL, LinS);
+        
+        swap += Math.min(MinS, SinM);
+        
+        // key idea: if there is leftovers after "perfect swaps", then each leftover needs 2 swaps to rearrange
+        // because if "perfect swaps" can't reset them, that means they are 3-section mismatchs. 3-section mismatch is something like SinL LinM and MinS
+        int leftover = Math.max(MinL, LinM) - Math.min(MinL, LinM);
+        
+        swap += leftover*2;
+        
+        System.out.print(swap);
+    }
+}
